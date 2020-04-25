@@ -110,7 +110,13 @@
         <Button
             android:id="@+id/btnPickSingle"
             android:text="Chọn hình"
-            android:layout_width="300dp"
+            android:layout_width="150dp"
+            android:layout_height="70dp"/>
+
+        <Button
+            android:id="@+id/btnCamera"
+            android:text="Sử dụng Camera"
+            android:layout_width="150dp"
             android:layout_height="70dp"/>
     </LinearLayout>
 

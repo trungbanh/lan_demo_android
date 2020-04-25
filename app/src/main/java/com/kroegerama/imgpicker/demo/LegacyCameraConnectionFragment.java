@@ -24,6 +24,7 @@ import android.hardware.Camera.CameraInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
@@ -100,6 +101,8 @@ public class LegacyCameraConnectionFragment extends Fragment {
 
           textureView.setAspectRatio(/* width= */ s.height, /* height= */ s.width);
 
+          Log.e("it have weight, height", s.height + " === "+ s.width);
+
           camera.startPreview();
         }
 
@@ -153,7 +156,6 @@ public class LegacyCameraConnectionFragment extends Fragment {
     // available, and "onSurfaceTextureAvailable" will not be called. In that case, we can open
     // a camera and start preview from here (otherwise, we wait until the surface is ready in
     // the SurfaceTextureListener).
-
     if (textureView.isAvailable()) {
       if (camera != null) {
         camera.startPreview();

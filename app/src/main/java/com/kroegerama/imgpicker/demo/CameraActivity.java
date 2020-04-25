@@ -38,6 +38,8 @@ import android.os.Trace;
 import androidx.annotation.NonNull;
 import androidx.annotation.UiThread;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
 import android.view.Surface;
@@ -99,17 +101,12 @@ public abstract class CameraActivity extends AppCompatActivity
       recognitionValueTextView,
       recognition1ValueTextView,
       recognition2ValueTextView;
-  protected TextView frameValueTextView,
-      cropValueTextView,
-      cameraResolutionTextView,
-      rotationTextView,
-      inferenceTimeTextView;
   protected ImageView bottomSheetArrowImageView;
   private ImageView plusImageView, minusImageView;
   private Spinner deviceSpinner;
   private TextView threadsTextView;
 
-  private Button btnPickImage;
+  private Button btnPickImage, btnUseCamera;
 
   private ViewGroup imageContainer;
 
@@ -129,8 +126,6 @@ public abstract class CameraActivity extends AppCompatActivity
     } else {
       requestPermission();
     }
-
-
 
     bottomSheetLayout = findViewById(R.id.bottom_sheet_layout);
     gestureLayout = findViewById(R.id.gesture_layout);
@@ -190,10 +185,17 @@ public abstract class CameraActivity extends AppCompatActivity
     recognition1ValueTextView = findViewById(R.id.detected_item1_value);
     recognition2TextView = findViewById(R.id.detected_item2);
     recognition2ValueTextView = findViewById(R.id.detected_item2_value);
+
+    btnUseCamera = findViewById(R.id.btnCamera);
+    btnUseCamera.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            setFragment();
+        }
+    });
+
     btnPickImage = findViewById(R.id.btnPickSingle);
-
     imageContainer = findViewById(R.id.imageContainer);
-
     btnPickImage.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -209,9 +211,9 @@ public abstract class CameraActivity extends AppCompatActivity
   }
 
   protected int[] getRgbBytes() {
-    imageConverter.run();
-    return rgbBytes;
-  }
+        imageConverter.run();
+        return rgbBytes;
+    }
 
   protected int getLuminanceStride() {
     return yRowStride;
@@ -492,6 +494,7 @@ public abstract class CameraActivity extends AppCompatActivity
       camera2Fragment.setCamera(cameraId);
       fragment = camera2Fragment;
     } else {
+//        ===================================================================================
       fragment =
           new LegacyCameraConnectionFragment(this, getLayoutId(), getDesiredPreviewFrameSize());
     }
@@ -560,26 +563,6 @@ public abstract class CameraActivity extends AppCompatActivity
     }
   }
 
-  protected void showFrameInfo(String frameInfo) {
-//    frameValueTextView.setText(frameInfo);
-  }
-
-  protected void showCropInfo(String cropInfo) {
-//    cropValueTextView.setText(cropInfo);
-  }
-
-  protected void showCameraResolution(String cameraInfo) {
-//    cameraResolutionTextView.setText(cameraInfo);
-  }
-
-  protected void showRotationInfo(String rotation) {
-//      rotationTextView.setText(rotation);
-  }
-
-  protected void showInference(String inferenceTime) {
-//    inferenceTimeTextView.setText(inferenceTime);
-  }
-
   protected Device getDevice() {
     return device;
   }
@@ -620,21 +603,6 @@ public abstract class CameraActivity extends AppCompatActivity
 
   @Override
   public void onClick(View v) {
-//    if (v.getId() == R.id.plus) {
-//      String threads = threadsTextView.getText().toString().trim();
-//      int numThreads = Integer.parseInt(threads);
-//      if (numThreads >= 9) return;
-//      setNumThreads(++numThreads);
-//      threadsTextView.setText(String.valueOf(numThreads));
-//    } else if (v.getId() == R.id.minus) {
-//      String threads = threadsTextView.getText().toString().trim();
-//      int numThreads = Integer.parseInt(threads);
-//      if (numThreads == 1) {
-//        return;
-//      }
-//      setNumThreads(--numThreads);
-//      threadsTextView.setText(String.valueOf(numThreads));
-//    }
   }
 
   @Override
@@ -651,11 +619,16 @@ public abstract class CameraActivity extends AppCompatActivity
 
   @Override
   public void onImagesSelected(@NotNull List<? extends Uri> uris, @Nullable String tag) {
+      Log.e("is on click work","run ");
     imageContainer.removeAllViews();
     for (Uri uri : uris) {
-      ImageView iv = (ImageView) LayoutInflater.from(this).inflate(R.layout.scrollitem_image, imageContainer, false);
-      imageContainer.addView(iv);
-      Glide.with(this).load(uri).into(iv);
+//      ImageView iv = (ImageView) LayoutInflater.from(this).inflate(R.layout.scrollitem_image, imageContainer, false);
+//      imageContainer.addView(iv);
+
+        Log.e("this uri run", uri.toString());
+        Fragment fragment = new ImageReview(getDesiredPreviewFrameSize(), uri);
+        getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+
     }
   }
 }
