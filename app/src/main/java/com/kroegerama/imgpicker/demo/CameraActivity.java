@@ -651,8 +651,8 @@ public abstract class CameraActivity extends AppCompatActivity
     public Bitmap getResizedBitmap(Bitmap bm) {
         int width = bm.getWidth();
         int height = bm.getHeight();
-        float scaleWidth = ((float) 480) / width;
-        float scaleHeight = ((float) 640) / height;
+        float scaleWidth = ((float) 640) / width;
+        float scaleHeight = ((float) 480) / height;
         // CREATE A MATRIX FOR THE MANIPULATION
         Matrix matrix = new Matrix();
         // RESIZE THE BIT MAP
@@ -667,8 +667,8 @@ public abstract class CameraActivity extends AppCompatActivity
 
 // ===============================================================
     byte [] getNV21(Bitmap scaled) {
-        int inputWidth = 480;
-        int inputHeight = 640;
+        int inputWidth = 640;
+        int inputHeight = 480;
 
         int [] argb = new int[inputWidth * inputHeight];
 

@@ -1,4 +1,11 @@
-Catleya
-Denro_Nang
-Gia_Hac
-Ho_Diep
+0 Cam_Cu
+1 Catleya
+2 Denro_Nang
+3 Gia_Hac
+4 Ho_Diep
+5 Hoang_Thao
+6 Kieu
+7 Mokara
+8 Ngoc_Diem
+9 Vanda
+10 Vu_Nu
