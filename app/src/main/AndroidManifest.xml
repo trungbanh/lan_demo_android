@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.kroegerama.imgpicker.demo">
@@ -5,6 +6,7 @@
     <uses-sdk />
 
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -16,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ImageClassification"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".first_time.FirstTime"></activity>
         <activity android:name=".ClassifierActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,4 +37,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
+
 </manifest>
