@@ -19,6 +19,7 @@ package com.kroegerama.imgpicker.demo;
         import android.Manifest;
         import android.app.Fragment;
         import android.content.Context;
+        import android.content.Intent;
         import android.content.pm.PackageManager;
         import android.graphics.Bitmap;
         import android.graphics.Matrix;
@@ -69,6 +70,7 @@ package com.kroegerama.imgpicker.demo;
         import com.kroegerama.imgpicker.ButtonType;
         import com.kroegerama.imgpicker.demo.env.ImageUtils;
         import com.kroegerama.imgpicker.demo.env.Logger;
+        import com.kroegerama.imgpicker.demo.first_time.FirstTime;
         import com.kroegerama.imgpicker.demo.tflite.Classifier.Device;
         import com.kroegerama.imgpicker.demo.tflite.Classifier.Recognition;
 
@@ -339,6 +341,13 @@ public abstract class CameraActivity extends AppCompatActivity
     public synchronized void onResume() {
         LOGGER.d("onResume " + this);
         super.onResume();
+
+        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isFirstRun", true);
+        if(isFirstRun) {
+            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("isFirstRun", false).commit();
+            startActivity(new Intent(this, FirstTime.class));
+        }
 
         handlerThread = new HandlerThread("inference");
         handlerThread.start();
